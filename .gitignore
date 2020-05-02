@@ -1,0 +1,7 @@
+.pytest_cache/
+*.vdi
+*.iso
+*.log
+scratch.txt
+__pycache__
+.idea/

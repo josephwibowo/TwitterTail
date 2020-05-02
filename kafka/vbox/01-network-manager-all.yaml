@@ -1,0 +1,16 @@
+network:
+  version: 2
+  renderer: NetworkManager
+  ethernets:
+    lo:
+      renderer: networkd
+      match:
+        name: lo
+    enp0s3:
+      dhcp4: yes
+      renderer: networkd
+    enp0s8:
+      dhcp4: no
+      renderer: networkd
+      addresses: [192.168.0.50/24]
+      gateway: 192.168.1.1
