@@ -1,9 +1,7 @@
 #!/usr/bin/env bash
+REPO=TwitterTail
 
-cd /srv
-git clone ...
-
-# Install OpenSSH and make it passwordless - Do I need this?
+# Install OpenSSH and make it passwordless
 sudo apt-get update
 sudo apt-get -y install openssh-client openssh-server
 sudo sed -i -e 's/#PermitEmptyPasswords no/PermitEmptyPasswords yes/g' /etc/ssh/sshd_config
