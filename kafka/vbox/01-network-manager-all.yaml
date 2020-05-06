@@ -13,4 +13,4 @@ network:
       dhcp4: no
       renderer: networkd
       addresses: [192.168.0.50/24]
-      gateway: 192.168.1.1
+      gateway4: 192.168.1.1

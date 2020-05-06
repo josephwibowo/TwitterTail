@@ -1,8 +1,13 @@
 #!/usr/bin/env bash
 
-IP=$1
+worker_ip=${1:-192.168.0.51}
+ip=$(ip -4 addr show enp0s8 | grep -oP '(?<=inet\s)\d+(\.\d+){3}' | head -n 1)
 
 # Start Docker Swarm
-docker swarm init --advertise-addr ${IP}
+docker swarm init --advertise-addr ${ip}
 
 # Add worker nodes
+add_cmd=$(docker swarm join-token worker | tail -n 2 | xargs)
+ssh -o "StrictHostKeyChecking=no" lubuntu@${worker_ip} << EOF
+    eval $add_cmd
+EOF
