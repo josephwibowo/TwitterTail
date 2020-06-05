@@ -4,12 +4,18 @@ services:
     image: wurstmeister/zookeeper
     ports:
       - "2181:2181"
+    deploy:
+      placement:
+        constraints:
+          - "node.role==manager"
     networks:
      - kafka-network
   kafka1:
     image: wurstmeister/kafka:latest
     deploy:
-      mode: global
+      placement:
+        constraints:
+          - "node.role==worker"
     ports:
       - target: 9093
         published: 9093
@@ -21,24 +27,6 @@ services:
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
       KAFKA_ADVERTISED_LISTENERS: INSIDE://:9092,OUTSIDE://_{HOSTNAME_COMMAND}:9093
       KAFKA_LISTENERS: INSIDE://:9092,OUTSIDE://:9093
-      KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-  kafka2:
-    image: wurstmeister/kafka:latest
-    deploy:
-      mode: global
-    ports:
-      - target: 9094
-        published: 9094
-        protocol: tcp
-        mode: host
-    environment:
-      HOSTNAME_COMMAND: "docker info | grep ^Name: | cut -d' ' -f 2"
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
-      KAFKA_ADVERTISED_LISTENERS: INSIDE://:9092,OUTSIDE://_{HOSTNAME_COMMAND}:9094
-      KAFKA_LISTENERS: INSIDE://:9092,OUTSIDE://:9094
       KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
