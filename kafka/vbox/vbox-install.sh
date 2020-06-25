@@ -28,7 +28,6 @@ sudo add-apt-repository \
    stable"
 
 sudo apt-get -y install docker-ce docker-ce-cli containerd.io
-sudo cp /home/${user}/Documents/TwitterTail/kafka/vbox/daemon.json /etc/docker/daemon.json
 sudo systemctl stop docker
 sudo systemctl start docker
 
