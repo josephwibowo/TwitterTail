@@ -9,7 +9,7 @@ sudo service sshd restart
 
 # rewrite network file for static IP
 user=$(whoami)
-sudo cp /home/${user}/Documents/TwitterTail/kafka/vbox/01-network-manager-all.yaml /etc/netplan/01-network-manager-all.yaml
+sudo cp /home/${user}/TwitterTail/kafka/vbox/01-network-manager-all.yaml /etc/netplan/01-network-manager-all.yaml
 sudo netplan apply
 
 # Docker Install (https://docs.docker.com/engine/install/ubuntu/)
