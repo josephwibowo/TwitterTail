@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 # This Script installs Docker and SSH onto Ubuntu. Also sets up networking
 
-# Install OpenSSH and make it passwordless
 user=ubuntu
+sudo echo "${user}     ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+
+# Install OpenSSH and make it passwordless
 sudo mkdir /home/${user}/.ssh
 sudo chown ${user} /home/${user}/.ssh
 sudo apt-get update
@@ -36,4 +38,3 @@ sudo systemctl start docker
 # add ubuntu to docker group
 sudo usermod -aG docker ${user}
 sudo chmod a+rwx /var/run/docker.sock
-echo | su - ${user}
