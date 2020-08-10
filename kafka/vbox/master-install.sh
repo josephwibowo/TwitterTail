@@ -34,6 +34,7 @@ sudo add-apt-repository \
 sudo apt-get -y install docker-ce docker-ce-cli containerd.io
 sudo systemctl stop docker
 sudo systemctl start docker
+sudo apt install docker-compose -y
 
 # add ubuntu to docker group
 sudo usermod -aG docker ${user}

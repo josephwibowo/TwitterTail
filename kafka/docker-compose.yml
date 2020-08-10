@@ -16,6 +16,8 @@ services:
       placement:
         constraints:
           - "node.role==worker"
+    networks:
+     - kafka-network
     ports:
       - target: 9093
         published: 9093
