@@ -9,7 +9,9 @@ services:
         constraints:
           - "node.role==manager"
     networks:
-     - kafka-network
+      kafka-network:
+        aliases:
+          - zookeeper
   kafka1:
     image: wurstmeister/kafka:latest
     deploy:
@@ -17,14 +19,9 @@ services:
         constraints:
           - "node.role==worker"
     networks:
-     - kafka-network
-    ports:
-      - target: 9093
-        published: 9093
-        protocol: tcp
-        mode: host
+      - kafka-network
     environment:
-      HOSTNAME_COMMAND: "ip -4 addr show enp0s8 | grep -oP '(?<=inet\\s)\\d+(\\.\\d+){3}' | head -1"
+      HOSTNAME_COMMAND: "docker info | grep 'Node Address:' | cut -d' ' -f 4"
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
       KAFKA_ADVERTISED_LISTENERS: INSIDE://:9092,OUTSIDE://_{HOSTNAME_COMMAND}:9093
@@ -32,7 +29,6 @@ services:
       KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-    restart: on-failure
 
 networks:
   kafka-network:
