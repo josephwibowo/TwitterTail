@@ -22,6 +22,11 @@ services:
       kafka-network:
         aliases:
           - kafka-1
+    ports:
+      - target: 9093
+        published: 9093
+        protocol: tcp
+        mode: host
     environment:
       HOSTNAME_COMMAND: "docker info | grep 'Node Address:' | cut -d' ' -f 4"
       KAFKA_ZOOKEEPER_CONNECT: zookeeper
