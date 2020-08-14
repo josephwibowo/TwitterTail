@@ -29,13 +29,18 @@ services:
         mode: host
     environment:
       HOSTNAME_COMMAND: "docker info | grep 'Node Address:' | cut -d' ' -f 4"
+      KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
       KAFKA_ADVERTISED_LISTENERS: INSIDE://:9092,OUTSIDE://_{HOSTNAME_COMMAND}:9093
       KAFKA_LISTENERS: INSIDE://:9092,OUTSIDE://:9093
       KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
+      KAFKA_LOG_RETENTION_BYTES: -1
+      KAFKA_LOG_RETENTION_DAYS: 2
+      KAFKA_LOG_DIRS: /kafka/kafka-logs
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      - /opt/kafka-1:/kafka/kafka-logs
 
 networks:
   kafka-network:
