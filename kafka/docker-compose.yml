@@ -12,9 +12,6 @@ services:
       kafka-network:
         aliases:
           - zookeeper
-    volumes:
-      - /opt/zookeeper_data:/var/lib/zookeeper/data
-      - /opt/zookeeper_log:/var/lib/zookeeper/log
   kafka1:
     image: wurstmeister/kafka:latest
     deploy:
